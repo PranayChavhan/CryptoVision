@@ -22,8 +22,9 @@ class _CryptoDetailsState extends State<CryptoDetails> {
   }
 
   streamListener() {
-    channel = IOWebSocketChannel.connect(
-        'wss://stream.binance.com:9443/ws/' + widget.crypto_name.toLowerCase()+ "@kline_1m");
+    channel = IOWebSocketChannel.connect('wss://stream.binance.com:9443/ws/' +
+        widget.crypto_name.toLowerCase() +
+        "@kline_1m");
     channel.stream.listen((message) {
       setState(() {
         //tickers = jsonDecode(message);
@@ -43,9 +44,7 @@ class _CryptoDetailsState extends State<CryptoDetails> {
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Center(
-          child: Text("Details Screen"),
-        ));
+      child: Text("Details Screen"),
+    ));
   }
-
-
 }
