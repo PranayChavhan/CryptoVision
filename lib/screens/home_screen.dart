@@ -81,26 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text("NULL data"),
             );
           }
-        })),
-        floatingActionButton: FloatingActionButton(
-          onPressed: fetchData,
-          backgroundColor: Colors.blueAccent,
-          body: Center(child: ListView.builder(
-              itemBuilder: (BuildContext context, int position) {
-            final ticker = tickers[position];
-
-            if (ticker != null) {
-              final String symbol = ticker['s'].toString() ?? "DUMMY";
-              return ListTile(
-                title: Text(symbol),
-                trailing: Text(ticker['c'].toString()),
-              );
-            } else {
-              return const ListTile(
-                title: Text("NULL data"),
-              );
-            }
-          })),
-        ));
+        })));
   }
 }
