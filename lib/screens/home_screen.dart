@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cryptovision/screens/crypto_details.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -44,10 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ListView.builder(itemBuilder: (BuildContext context, int position) {
           final ticker = tickers[position];
 
-          print(ticker);
           if (ticker != null) {
             final String symbol = ticker['s'].toString() ?? "DUMMY";
             return ListTile(
+              onTap: () => {
+               Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CryptoDetails(ticker['s'])
+              ))
+              },
               title: Text(symbol),
               trailing: Text(ticker['c'].toString()),
             );
@@ -68,7 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 icon: const Icon(
                   Icons.menu,
                   color: Colors.white,
