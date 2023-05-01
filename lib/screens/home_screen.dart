@@ -7,6 +7,8 @@ import 'package:web_socket_channel/io.dart';
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+  final String data;
+  HomeScreen({Key? key, required this.data}) : super(key: key);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _buildAppBar(),
+        drawer: _buildDrawer(context),
         body: Center(child:
             ListView.builder(itemBuilder: (BuildContext context, int position) {
           final ticker = tickers[position];
@@ -48,11 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (ticker != null) {
             final String symbol = ticker['s'].toString() ?? "DUMMY";
             return ListTile(
-              onTap: () => {
-               Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CryptoDetails(ticker['s'])
-              ))
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CryptoDetails(ticker['s'].toString())));
               },
               title: Text(symbol),
               trailing: Text(ticker['c'].toString()),
@@ -65,35 +69,101 @@ class _HomeScreenState extends State<HomeScreen> {
         })));
   }
 
+  Drawer _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                  height: 60,
+                  width: 60,
+                  child: Image(
+                      image: NetworkImage(
+                          "https://cdn-icons-png.flaticon.com/512/4140/4140061.png"))),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text(
+                  widget.data,
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              )
+            ]),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              leading: Icon(
+                Icons.home,
+              ),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              selected: true,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              leading: Icon(
+                Icons.newspaper,
+              ),
+              title: const Text('News'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              leading: Icon(
+                Icons.account_circle,
+              ),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.black,
-      elevation: 0,
-      title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-                onPressed: () {
-
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 24,
-                )),
-            const Text(
-              "CryptoVision",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_outline,
-                  color: Colors.white,
-                  size: 22,
-                )),
-          ]),
-    );
+        backgroundColor: Colors.black,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "CryptoVision",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.favorite_outline,
+                color: Colors.white,
+                size: 22,
+              )),
+        ]);
   }
 }
