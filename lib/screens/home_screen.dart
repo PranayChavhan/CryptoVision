@@ -17,7 +17,31 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CryptoVision'),
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                    size: 24,
+                  )),
+              Text(
+                "CryptoVision",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                    size: 22,
+                  )),
+            ]),
       ),
       body: ListView.builder(
         itemCount: data.length,
