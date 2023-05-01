@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     channel.stream.listen((message) {
       setState(() {
         tickers = jsonDecode(message);
-        print(tickers.length);
+        print(tickers.toString());
         // for (final ticker in tickers) {
         //   final symbol = ticker['s'];
         //   final price = ticker['c'];
@@ -39,37 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          elevation: 0,
-          title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                      size: 24,
-                    )),
-                Text(
-                  "CryptoVision",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                      size: 22,
-                    )),
-              ]),
-        ),
+        appBar: _buildAppBar(),
         body: Center(child:
             ListView.builder(itemBuilder: (BuildContext context, int position) {
           final ticker = tickers[position];
 
+          print(ticker);
           if (ticker != null) {
             final String symbol = ticker['s'].toString() ?? "DUMMY";
             return ListTile(
@@ -82,5 +57,35 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         })));
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.black,
+      elevation: 0,
+      title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 24,
+                )),
+            const Text(
+              "CryptoVision",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.favorite_outline,
+                  color: Colors.white,
+                  size: 22,
+                )),
+          ]),
+    );
   }
 }
