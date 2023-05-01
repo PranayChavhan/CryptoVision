@@ -7,6 +7,8 @@ import 'package:web_socket_channel/io.dart';
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+  final String data;
+  HomeScreen({Key? key, required this.data}) : super(key: key);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -49,6 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
           if (ticker != null) {
             final String symbol = ticker['s'].toString() ?? "DUMMY";
             return ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            CryptoDetails(ticker['s'].toString())));
+              },
               title: Text(symbol),
               trailing: Text(ticker['c'].toString()),
             );
@@ -81,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: Text(
-                  "Ayush Bulbule",
+                  widget.data,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
               )

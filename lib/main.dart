@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:cryptovision/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/home_screen.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "CryptoVision",
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: WelcomeScreen(),
     );
   }
 }
