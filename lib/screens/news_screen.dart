@@ -1,99 +1,77 @@
 import 'dart:convert';
 
+import 'package:cryptovision/models/Article.dart';
 import 'package:cryptovision/screens/crypto_details.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:http/http.dart' as http;
+import '../models/News.dart';
+import 'Widgets.dart';
 
-class HomeScreen extends StatefulWidget {
+class NewsScreen extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<NewsScreen> createState() => _NewsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late IOWebSocketChannel channel;
-  late List<dynamic> tickers;
+class _NewsScreenState extends State<NewsScreen> {
+
+  bool _loading = true;
+  var newslist;
+
+  void getNews() async {
+    News news = News();
+    await news.getNews();
+    newslist = news.news;
+    setState(() {
+      _loading = false;
+    });
+  }
+
 
   @override
   void initState() {
+    _loading = true;
+    // TODO: implement initState
     super.initState();
-    streamListener();
-  }
-
-  streamListener() {
-    channel = IOWebSocketChannel.connect(
-        'wss://stream.binance.com:9443/ws/!ticker@arr');
-    channel.stream.listen((message) {
-      setState(() {
-        tickers = jsonDecode(message);
-        print(tickers.toString());
-        // for (final ticker in tickers) {
-        //   final symbol = ticker['s'];
-        //   final price = ticker['c'];
-        //   final volume = ticker['v'];
-        //   final change = ticker['P'];
-        //   print('$symbol: $price ($change%)');
-        // }
-      });
-    });
+    getNews();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppBar(),
-        body: Center(child:
-            ListView.builder(itemBuilder: (BuildContext context, int position) {
-          final ticker = tickers[position];
 
-          if (ticker != null) {
-            final String symbol = ticker['s'].toString() ?? "DUMMY";
-            return ListTile(
-              onTap: () => {
-               Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CryptoDetails(ticker['s'])
-              ))
-              },
-              title: Text(symbol),
-              trailing: Text(ticker['c'].toString()),
-            );
-          } else {
-            return const ListTile(
-              title: Text("NULL data"),
-            );
-          }
-        })));
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.black,
-      elevation: 0,
-      title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            IconButton(
-                onPressed: () {
-
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 24,
-                )),
-            const Text(
-              "CryptoVision",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      body: SafeArea(
+        child: _loading
+            ? Center(
+          child: CircularProgressIndicator(),
+        )
+            : SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 16),
+                  child: ListView.builder(
+                      itemCount: newslist.length,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return NewsTile(
+                          imgUrl: newslist[index].urlToImage ?? "",
+                          title: newslist[index].title ?? "",
+                          desc: newslist[index].description ?? "",
+                          content: newslist[index].content ?? "",
+                          posturl: newslist[index].url ?? "",
+                        );
+                      }),
+                ),
+              ],
             ),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite_outline,
-                  color: Colors.white,
-                  size: 22,
-                )),
-          ]),
+          ),
+        ),
+      ),
     );
   }
+
+
 }
