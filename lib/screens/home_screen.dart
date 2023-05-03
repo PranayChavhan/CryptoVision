@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cryptovision/components/myappbar.dart';
 import 'package:cryptovision/screens/crypto_details.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
@@ -42,64 +43,68 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _buildAppBar(),
+        appBar: const MyAppBar(title: "CryptoVision"),
         drawer: _buildDrawer(context),
-        body: (tickers == null) ? const Center(
-          child: CircularProgressIndicator(
-            color: Colors.black,
-          )
-        ):Center(child:
-            ListView.builder(itemBuilder: (BuildContext context, int position) {
-          final ticker = tickers![position];
+        body: (tickers == null)
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Colors.black,
+              ))
+            : Center(child: ListView.builder(
+                itemBuilder: (BuildContext context, int position) {
+                final ticker = tickers![position];
 
-          if (ticker != null) {
-            final String symbol = ticker['s'].toString() ?? "DUMMY";
-            return Container(
-
-              decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const CryptoDetails()));
-                },
-                title: Text(symbol, style: TextStyle(
-                    color: Colors.black,
-                  fontSize: 20
-
-                  ),
-                ),
-                trailing: Container(
-                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: Column(
-                    children: [
-                      Text(
-                        "${ticker['c']}",
-                          style: const TextStyle(
-                          color: Colors.black,
-                            fontSize: 20
-
-                        ),
+                if (ticker != null) {
+                  final String symbol = ticker['s'].toString() ?? "DUMMY";
+                  return ListTile(
+                    shape: BeveledRectangleBorder(
+                        side:
+                            BorderSide(color: Colors.grey.shade500, width: .5)),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CryptoDetails()));
+                    },
+                    title: Text(
+                      symbol,
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${ticker['c']}",
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 20),
+                          ),
+                          Text(
+                            ticker['p'].toString(),
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                color:
+                                    ticker['p'].toString().characters.first ==
+                                            "-"
+                                        ? Colors.red
+                                        : Colors.green),
+                          )
+                        ],
                       ),
-                      Text(ticker['p'].toString(),
-                        style: TextStyle(
-                            color: ticker['p'].toString().characters.first == "-" ? Colors.red : Colors.blue
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-
-              ),
-            );
-          } else {
-            return const ListTile(
-              title: Text("NULL data"),
-            );
-          }
-        })));
+                    ),
+                  );
+                } else {
+                  return const ListTile(
+                    title: Text("NULL data"),
+                  );
+                }
+              })));
   }
 
   Drawer _buildDrawer(BuildContext context) {
@@ -180,25 +185,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "CryptoVision",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.favorite_outline,
-                color: Colors.white,
-                size: 22,
-              )),
-        ]);
   }
 }

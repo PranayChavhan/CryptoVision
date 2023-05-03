@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'ArticleView.dart';
+import 'article_view.dart';
 
-Widget MyAppBar(){
+Widget MyAppBar() {
   return AppBar(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const <Widget>[
         Text(
           "Flutter",
-          style:
-          TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
         ),
         Text(
           "News",
@@ -23,21 +22,27 @@ Widget MyAppBar(){
   );
 }
 
-
 class NewsTile extends StatelessWidget {
   final String imgUrl, title, desc, content, posturl;
 
-  const NewsTile({required this.imgUrl, required this.desc, required this.title, required this.content, required this.posturl, super.key});
+  const NewsTile(
+      {required this.imgUrl,
+      required this.desc,
+      required this.title,
+      required this.content,
+      required this.posturl,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => ArticleView(
-              postUrl: posturl,
-            )
-        ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ArticleView(
+                      postUrl: posturl,
+                    )));
       },
       child: Container(
           margin: EdgeInsets.only(bottom: 24),
@@ -47,8 +52,9 @@ class NewsTile extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.bottomCenter,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(6),bottomLeft:  Radius.circular(6))
-              ),
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(6),
+                      bottomLeft: Radius.circular(6))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -61,7 +67,9 @@ class NewsTile extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.cover,
                       )),
-                  SizedBox(height: 12,),
+                  SizedBox(
+                    height: 12,
+                  ),
                   Text(
                     title,
                     maxLines: 2,
