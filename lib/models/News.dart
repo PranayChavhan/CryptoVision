@@ -7,8 +7,6 @@ import 'Article.dart';
 class News {
   List<Article> news = [];
 
-  List<Article> news = [];
-
   String getDate() {
     var date = DateTime.now();
     return DateFormat('yyyy-MM-dd').format(date);

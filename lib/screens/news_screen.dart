@@ -21,7 +21,7 @@ class _NewsScreenState extends State<NewsScreen> {
           centerTitle: true,
           elevation: 0,
           title: Text(
-            "News Data",
+            "Crypto Trends",
             style: TextStyle(fontSize: 16),
           ),
         ),
