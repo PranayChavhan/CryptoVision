@@ -79,22 +79,24 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: Colors.black,
             ),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                  height: 60,
-                  width: 60,
-                  child: Image(
-                      image: NetworkImage(
-                          "https://cdn-icons-png.flaticon.com/512/4140/4140061.png"))),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text(
-                  widget.data,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
-              )
-            ]),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      height: 50,
+                      width: 60,
+                      child: Image(
+                          image: NetworkImage(
+                              "https://cdn-icons-png.flaticon.com/512/4140/4140061.png"))),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Text(
+                      widget.data,
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  )
+                ]),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 12),
