@@ -74,7 +74,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: Text("Welcome to CryptoVision!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 32,
+                                fontSize: 30,
                                 letterSpacing: 0.7,
                                 fontWeight: FontWeight.w600))),
                     Text("Please enter your name to get started!",

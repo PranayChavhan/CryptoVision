@@ -19,20 +19,24 @@ class CryptoDetails extends StatefulWidget {
 class _CryptoDetailsState extends State<CryptoDetails> {
   late IOWebSocketChannel channel;
   Map<String, dynamic>? tickers;
+  List<PricePoint>? points;
 
   @override
   void initState() {
     super.initState();
     streamListener();
+    points = [];
   }
 
   streamListener() {
     channel = IOWebSocketChannel.connect(
         'wss://stream.binance.com:9443/ws/${widget.symbol.toLowerCase()}@kline_1s');
     channel.stream.listen((message) {
+
       setState(() {
         tickers = jsonDecode(message); //
-        print(TextAlignVertical.center);
+        points!.add(PricePoint(x: double.parse(tickers!['k']['o']*10), y: double.parse(tickers!['k']['c']*10)));
+        print(double.parse(tickers!['k']['o']));
         // print(tickers.t    oString());
         // for (final ticker in tickers) {
         //   final symbol = ticker['s'];
@@ -49,7 +53,7 @@ class _CryptoDetailsState extends State<CryptoDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "CryptoVision",
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
@@ -59,18 +63,38 @@ class _CryptoDetailsState extends State<CryptoDetails> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             size: 28,
             color: Colors.white,
           ),
         ),
       ),
-      body: Column(children: [
-        LineChartWidget(pricePoints),
+      body: (points == null) ? 
+      CircularProgressIndicator() :  
+      Column(children: [
+        AspectRatio(
+          aspectRatio: 2,
+          child: LineChart(
+            LineChartData(
+              lineBarsData: [
+                LineChartBarData(
+                  spots: points!.map((point) => FlSpot(point.x, point.y)).toList(),
+                  isCurved: false,
+                  // dotData: FlDotData(
+                  //   show: false,
+                  // ),
+                ),
+              ],
+            ),
+          ),
+        ),
         Text(
-          tickers.toString(),
-        )
+          tickers!['k']['s'],
+        ), Text(
+          "Open Prize " + tickers!['k']['o'],
+        ),
+
       ]),
     );
   }

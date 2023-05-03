@@ -6,9 +6,9 @@ class News {
 
   List<Article> news  = [];
 
-  Future<void> getNews() async{
+  Future<List<Article>> getNews() async{
 
-    String url = "https://newsapi.org/v2/everything?q=crypto&from=2023-04-01&sortBy=publishedAt&apiKey=a27b9344271d497489d7d4343fa0dea1";
+    String url = "https://newsapi.org/v2/everything?q=crypto&from=2023-05-01&sortBy=publishedAt&apiKey=a27b9344271d497489d7d4343fa0dea1";
 
     var response = await http.get(Uri.parse(url));
 
@@ -33,6 +33,7 @@ class News {
       });
     }
 
+    return news;
   }
 
 
