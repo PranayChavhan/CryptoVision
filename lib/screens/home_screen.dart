@@ -1,17 +1,13 @@
 import 'dart:convert';
 
-import 'package:cryptovision/components/myappbar.dart';
-import 'package:cryptovision/screens/crypto_details.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
-
-import 'news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
   final String data;
-  HomeScreen({Key? key, required this.data}) : super(key: key);
+  const HomeScreen({Key? key, required this.data}) : super(key: key);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -30,14 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     channel.stream.listen((message) {
       setState(() {
         tickers = jsonDecode(message);
-        // print(tickers.toString());
-        // for (final ticker in tickers) {
-        //   final symbol = ticker['s'];
-        //   final price = ticker['c'];
-        //   final volume = ticker['v'];
-        //   final change = ticker['P'];
-        //   print('$symbol: $price ($change%)');
-        // }
       });
     });
   }
@@ -45,75 +33,287 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(title: "CryptoVision"),
-        drawer: _buildDrawer(context),
-        body: (tickers == null)
-            ? const Center(
-                child: CircularProgressIndicator(
-                color: Colors.black,
-              ))
-            : Center(
-                child: ListView.builder(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text(
+          'CryptoVision',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications,
+              size: 30.0,
+            ),
+          ),
+        ],
+      ),
+      drawer: _buildDrawer(context),
+      body: (tickers == null)
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: Colors.white,
+            ))
+          : Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  height: 80.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Market Cap',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          const SizedBox(height: 5.0),
+                          const Text(
+                            '\$1.2B',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '+2.5%',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Icon(
+                                Icons.arrow_drop_up,
+                                color: Colors.green,
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            '24h Volume',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          const SizedBox(height: 5.0),
+                          const Text(
+                            '\$123B',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '+2.5%',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Icon(
+                                Icons.arrow_drop_up,
+                                color: Colors.green,
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'BTC Dominance',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          const SizedBox(height: 5.0),
+                          const Text(
+                            '60.5%',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '+2.5%',
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Icon(
+                                Icons.arrow_drop_up,
+                                color: Colors.green,
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  height: 50.0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search for cryptocurrencies',
+                      hintStyle: TextStyle(
+                        color: Colors.grey[400],
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey[400],
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[900],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     itemCount: tickers?.length ?? 0,
                     itemBuilder: (BuildContext context, int position) {
                       final ticker = tickers![position];
+                      final String symbol = ticker['s'].toString();
 
-                      if (ticker != null) {
-                        final String symbol = ticker['s'].toString() ?? "DUMMY";
-                        return ListTile(
-                          shape: BeveledRectangleBorder(
-                              side: BorderSide(
-                                  color: Colors.grey.shade500, width: .5)),
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CryptoDetails(
-                                          symbol: ticker['s'].toString(),
-                                        )));
-                          },
-                          title: Text(
-                            symbol,
-                            style: const TextStyle(color: Colors.black, fontSize: 20),
-                          ),
-                          trailing: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        height: 80.0,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[900],
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  "${ticker['c']}",
-                                  textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 18),
-                                ),
-                                Text(
-                                  ticker['p'].toString(),
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      color: ticker['p']
-                                                  .toString()
-                                                  .characters
-                                                  .first ==
-                                              "-"
-                                          ? Colors.red
-                                          : Colors.green
+                                Container(
+                                  height: 40.0,
+                                  width: 40.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.blueGrey[800],
                                   ),
-                                )
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.account_balance_wallet,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10.0),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      symbol,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    Text(
+                                      "${ticker['c']}",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                          ),
-                        );
-                      } else {
-                        return const ListTile(
-                          title: Text("NULL data"),
-                        );
-                      }
-                    })));
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ticker['p'].toString(),
+                                  style: TextStyle(
+                                    color: ticker['p']
+                                                .toString()
+                                                .characters
+                                                .first ==
+                                            "-"
+                                        ? Colors.red
+                                        : Colors.green,
+                                    fontSize: 14.0,
+                                  ),
+                                ),
+                                const SizedBox(height: 5.0),
+                                Icon(
+                                  Icons.arrow_drop_up,
+                                  color:
+                                      ticker['p'].toString().characters.first ==
+                                              "-"
+                                          ? Colors.red
+                                          : Colors.green,
+                                  size: 30.0,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+    );
   }
 
   Drawer _buildDrawer(BuildContext context) {
@@ -123,14 +323,14 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.black,
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
+                  const SizedBox(
                       height: 50,
                       width: 60,
                       child: Image(
@@ -140,18 +340,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Text(
                       widget.data,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   )
                 ]),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
               ),
               title: const Text('Home'),
@@ -162,34 +362,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.newspaper,
               ),
               title: const Text('News'),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                const NewsScreen()
-                )
-                );
-
+                Navigator.pop(context);
               },
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.account_circle,
               ),
               title: const Text('Profile'),
