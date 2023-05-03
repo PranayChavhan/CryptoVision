@@ -1,15 +1,50 @@
+import 'dart:convert';
+
 import 'package:cryptovision/components/myappbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:cryptovision/components/line_chart_widget.dart';
+import 'package:cryptovision/data/price_point.dart';
 
 class CryptoDetails extends StatefulWidget {
-  const CryptoDetails({Key? key}) : super(key: key);
+  String symbol;
+  CryptoDetails({Key? key, required this.symbol}) : super(key: key);
 
   @override
   State<CryptoDetails> createState() => _CryptoDetailsState();
 }
 
 class _CryptoDetailsState extends State<CryptoDetails> {
+  late IOWebSocketChannel channel;
+  Map<String, dynamic>? tickers;
+
+  @override
+  void initState() {
+    super.initState();
+    streamListener();
+  }
+
+  streamListener() {
+    channel = IOWebSocketChannel.connect(
+        'wss://stream.binance.com:9443/ws/${widget.symbol.toLowerCase()}@kline_1s');
+    channel.stream.listen((message) {
+      setState(() {
+        tickers = jsonDecode(message); //
+        print(TextAlignVertical.center);
+        // print(tickers.t    oString());
+        // for (final ticker in tickers) {
+        //   final symbol = ticker['s'];
+        //   final price = ticker['c'];
+        //   final volume = ticker['v'];
+        //   final change = ticker['P'];
+        //   print('$symbol: $price ($change%)');
+        // }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +66,12 @@ class _CryptoDetailsState extends State<CryptoDetails> {
           ),
         ),
       ),
-      body: Center(child: Text("Hello Js")),
+      body: Column(children: [
+        LineChartWidget(pricePoints),
+        Text(
+          tickers.toString(),
+        )
+      ]),
     );
   }
 }

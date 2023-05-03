@@ -50,61 +50,67 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CircularProgressIndicator(
                 color: Colors.black,
               ))
-            : Center(child: ListView.builder(
-                itemBuilder: (BuildContext context, int position) {
-                final ticker = tickers![position];
+            : Center(
+                child: ListView.builder(
+                    itemCount: tickers?.length ?? 0,
+                    itemBuilder: (BuildContext context, int position) {
+                      final ticker = tickers![position];
 
-                if (ticker != null) {
-                  final String symbol = ticker['s'].toString() ?? "DUMMY";
-                  return ListTile(
-                    shape: BeveledRectangleBorder(
-                        side:
-                            BorderSide(color: Colors.grey.shade500, width: .5)),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CryptoDetails()));
-                    },
-                    title: Text(
-                      symbol,
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                    trailing: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${ticker['c']}",
-                            textAlign: TextAlign.right,
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 20),
+                      if (ticker != null) {
+                        final String symbol = ticker['s'].toString() ?? "DUMMY";
+                        return ListTile(
+                          shape: BeveledRectangleBorder(
+                              side: BorderSide(
+                                  color: Colors.grey.shade500, width: .5)),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CryptoDetails(
+                                          symbol: ticker['s'].toString(),
+                                        )));
+                          },
+                          title: Text(
+                            symbol,
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
-                          Text(
-                            ticker['p'].toString(),
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                                color:
-                                    ticker['p'].toString().characters.first ==
-                                            "-"
-                                        ? Colors.red
-                                        : Colors.green),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                } else {
-                  return const ListTile(
-                    title: Text("NULL data"),
-                  );
-                }
-              })));
+                          trailing: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${ticker['c']}",
+                                  textAlign: TextAlign.right,
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
+                                Text(
+                                  ticker['p'].toString(),
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      color: ticker['p']
+                                                  .toString()
+                                                  .characters
+                                                  .first ==
+                                              "-"
+                                          ? Colors.red
+                                          : Colors.green),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const ListTile(
+                          title: Text("NULL data"),
+                        );
+                      }
+                    })));
   }
 
   Drawer _buildDrawer(BuildContext context) {
