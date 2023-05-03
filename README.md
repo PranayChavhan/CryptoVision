@@ -1,16 +1,11 @@
 # cryptovision
 
-A new Flutter project.
+# Live Demo
 
-## Getting Started
+##Full stack, News Web app using React, Firebase, Hooks, Tailwind CSS and  News API... 👇
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 👉 Build a Crypto currancy tracker App using binanceAPI 💻
+- 👉 handle crypto currancy data using websockets🔑
+- 👉 Use different packages 
+    - [websocket-For socket programming]()
+    - [fl_charts-For chart]()

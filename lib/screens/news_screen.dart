@@ -1,72 +1,61 @@
-import 'dart:convert';
-
 import 'package:cryptovision/models/Article.dart';
-import 'package:cryptovision/screens/crypto_details.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:http/http.dart' as http;
+import '../components/myappbar.dart';
 import '../models/News.dart';
 import 'Widgets.dart';
 
 class NewsScreen extends StatefulWidget {
+  const NewsScreen({super.key});
+
   @override
   State<NewsScreen> createState() => _NewsScreenState();
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  bool _loading = true;
-  var newslist;
-
-  void getNews() async {
-    News news = News();
-    await news.getNews();
-    newslist = news.news;
-    setState(() {
-      _loading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    _loading = true;
-    // TODO: implement initState
-    super.initState();
-    getNews();
-  }
-
+  late News news = news = News();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: _loading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(top: 16),
-                        child: ListView.builder(
-                            itemCount: newslist.length,
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return NewsTile(
-                                imgUrl: newslist[index].urlToImage ?? "",
-                                title: newslist[index].title ?? "",
-                                desc: newslist[index].description ?? "",
-                                content: newslist[index].content ?? "",
-                                posturl: newslist[index].url ?? "",
-                              );
-                            }),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          centerTitle: true,
+          elevation: 0,
+          title: Text(
+            "News Data",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+        body: FutureBuilder(
+            future: news.getNews(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Article> data = snapshot.data!;
+                return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      print("data hai bhai");
+                      return NewsTile(
+                        imgUrl: data[index].urlToImage,
+                        title: data[index].title,
+                        desc: data[index].description,
+                        content: data[index].content,
+                        posturl: data[index].url,
+                      );
+
+                      return const Text("hello");
+                    });
+              }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
   }
 }

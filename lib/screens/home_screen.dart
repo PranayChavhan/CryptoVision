@@ -6,6 +6,8 @@ import 'package:cryptovision/screens/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
+import 'news_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     channel.stream.listen((message) {
       setState(() {
         tickers = jsonDecode(message);
-        print(tickers.toString());
+        // print(tickers.toString());
         // for (final ticker in tickers) {
         //   final symbol = ticker['s'];
         //   final price = ticker['c'];
@@ -63,8 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: BeveledRectangleBorder(
                               side: BorderSide(
                                   color: Colors.grey.shade500, width: .5)),
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 8),
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -75,7 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           title: Text(
                             symbol,
-                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 20),
                           ),
                           trailing: Container(
                             padding: const EdgeInsets.symmetric(
@@ -88,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "${ticker['c']}",
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
-                                      color: Colors.black, fontSize: 20),
+                                      color: Colors.black, fontSize: 18),
                                 ),
                                 Text(
                                   ticker['p'].toString(),
@@ -170,8 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               title: const Text('News'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NewsScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NewsScreen()));
               },
             ),
           ),
