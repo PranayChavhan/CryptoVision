@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
 import 'crypto_details.dart';
+import 'news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -294,7 +295,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               title: const Text('News'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const NewsScreen()),
+                    (route) => false);
               },
             ),
           ),
