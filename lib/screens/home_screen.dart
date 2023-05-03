@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late IOWebSocketChannel channel;
-  late List<dynamic> tickers;
+  List<dynamic>? tickers;
 
   @override
   void initState() {
@@ -44,22 +44,55 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: _buildAppBar(),
         drawer: _buildDrawer(context),
-        body: Center(child:
+        body: (tickers == null) ? const Center(
+          child: CircularProgressIndicator(
+            color: Colors.black,
+          )
+        ):Center(child:
             ListView.builder(itemBuilder: (BuildContext context, int position) {
-          final ticker = tickers[position];
+          final ticker = tickers![position];
 
           if (ticker != null) {
             final String symbol = ticker['s'].toString() ?? "DUMMY";
-            return ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            CryptoDetails(ticker['s'].toString())));
-              },
-              title: Text(symbol),
-              trailing: Text(ticker['c'].toString()),
+            return Container(
+
+              decoration: const BoxDecoration(border: Border(bottom: BorderSide())),
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const CryptoDetails()));
+                },
+                title: Text(symbol, style: TextStyle(
+                    color: Colors.black,
+                  fontSize: 20
+
+                  ),
+                ),
+                trailing: Container(
+                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                  child: Column(
+                    children: [
+                      Text(
+                        "${ticker['c']}",
+                          style: const TextStyle(
+                          color: Colors.black,
+                            fontSize: 20
+
+                        ),
+                      ),
+                      Text(ticker['p'].toString(),
+                        style: TextStyle(
+                            color: ticker['p'].toString().characters.first == "-" ? Colors.red : Colors.blue
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+              ),
             );
           } else {
             return const ListTile(
