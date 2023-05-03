@@ -66,12 +66,28 @@ class _CryptoDetailsState extends State<CryptoDetails> {
           ),
         ),
       ),
-      body: Column(children: [
-        LineChartWidget(pricePoints),
-        Text(
-          tickers.toString(),
-        )
-      ]),
+      body: Container(
+        padding: EdgeInsets.symmetric(vertical: 25),
+        child: (tickers != null)
+            ? Column(children: [
+                LineChartWidget(pricePoints),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                  child: Column(children: [
+                    Text(
+                      tickers!['s'].toString(),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text("Interval:" + tickers!['k'].toString(),
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400)),
+                  ]),
+                )
+              ])
+            : Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

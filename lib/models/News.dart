@@ -2,43 +2,35 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'Article.dart';
+
 class News {
+  List<Article> news = [];
 
-  List<Article> news  = [];
-
-  Future<void> getNews() async{
-
-    String url = "https://newsapi.org/v2/everything?q=crypto&from=2023-04-01&sortBy=publishedAt&apiKey=a27b9344271d497489d7d4343fa0dea1";
+  Future<void> getNews() async {
+    String url =
+        "https://newsapi.org/v2/everything?q=crypto&from=2023-04-01&sortBy=publishedAt&apiKey=a27b9344271d497489d7d4343fa0dea1";
 
     var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);
 
-    if(jsonData['status'] == "ok"){
-      jsonData["articles"].forEach((element){
-
-        if(element['urlToImage'] != null && element['description'] != null){
+    if (jsonData['status'] == "ok") {
+      jsonData["articles"].forEach((element) {
+        if (element['urlToImage'] != null && element['description'] != null) {
           Article article = Article(
             author: element['author'] ?? "author",
             title: element['title'] ?? "title",
             description: element['description'] ?? "description",
             url: element["url"] ?? "url",
             urlToImage: element['urlToImage'] ?? "toimage",
-            publishedAt:element['publishedAt'] ?? "publishedDate",
+            publishedAt: element['publishedAt'] ?? "publishedDate",
             content: element["content"] ?? "content",
           );
           news.add(article);
         }
-
       });
     }
-
+    print("NEWWSSSSSSSSSSSSSSSSSSSSSS");
+    print(news);
   }
-
-
 }
-
-
-
-
-

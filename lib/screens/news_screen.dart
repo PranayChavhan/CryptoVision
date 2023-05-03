@@ -14,7 +14,6 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-
   bool _loading = true;
   var newslist;
 
@@ -27,7 +26,6 @@ class _NewsScreenState extends State<NewsScreen> {
     });
   }
 
-
   @override
   void initState() {
     _loading = true;
@@ -39,39 +37,36 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: _loading
-            ? Center(
-          child: CircularProgressIndicator(),
-        )
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
             : SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(top: 16),
-                  child: ListView.builder(
-                      itemCount: newslist.length,
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return NewsTile(
-                          imgUrl: newslist[index].urlToImage ?? "",
-                          title: newslist[index].title ?? "",
-                          desc: newslist[index].description ?? "",
-                          content: newslist[index].content ?? "",
-                          posturl: newslist[index].url ?? "",
-                        );
-                      }),
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 16),
+                        child: ListView.builder(
+                            itemCount: newslist.length,
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return NewsTile(
+                                imgUrl: newslist[index].urlToImage ?? "",
+                                title: newslist[index].title ?? "",
+                                desc: newslist[index].description ?? "",
+                                content: newslist[index].content ?? "",
+                                posturl: newslist[index].url ?? "",
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
-
-
 }

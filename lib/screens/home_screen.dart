@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cryptovision/components/myappbar.dart';
 import 'package:cryptovision/screens/crypto_details.dart';
+import 'package:cryptovision/screens/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -169,7 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               title: const Text('News'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewsScreen()));
               },
             ),
           ),
