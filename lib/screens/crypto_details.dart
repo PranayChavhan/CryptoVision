@@ -21,6 +21,8 @@ class _CryptoDetailsState extends State<CryptoDetails> {
   Map<String, dynamic>? tickers;
   List<PricePoint>? points;
 
+  double x = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -30,13 +32,19 @@ class _CryptoDetailsState extends State<CryptoDetails> {
 
   streamListener() {
     channel = IOWebSocketChannel.connect(
-        'wss://stream.binance.com:9443/ws/${widget.symbol.toLowerCase()}@kline_1s');
+        'wss://stream.binance.com:9443/ws/${widget.symbol.toLowerCase()}@ticker');
     channel.stream.listen((message) {
 
       setState(() {
-        tickers = jsonDecode(message); //
-        points!.add(PricePoint(x: double.parse(tickers!['k']['o']*10), y: double.parse(tickers!['k']['c']*10)));
-        print(double.parse(tickers!['k']['o']));
+        tickers = jsonDecode(message);
+        double prize = double.parse(tickers!['c']);
+        double y = prize + double.parse(tickers!['p']);
+        x += 0.00000001;
+
+        print("x " + x.toString() + " y " + y.toString() );
+
+        points!.add(PricePoint(x: x, y: y));
+        //print(double.parse(tickers!['k']['o']));
         // print(tickers.t    oString());
         // for (final ticker in tickers) {
         //   final symbol = ticker['s'];
@@ -70,31 +78,25 @@ class _CryptoDetailsState extends State<CryptoDetails> {
           ),
         ),
       ),
-      body: (points == null) ? 
+      body: (points == null) ?
       CircularProgressIndicator() :  
       Column(children: [
         AspectRatio(
-          aspectRatio: 2,
+          aspectRatio: 1,
           child: LineChart(
             LineChartData(
               lineBarsData: [
                 LineChartBarData(
                   spots: points!.map((point) => FlSpot(point.x, point.y)).toList(),
                   isCurved: false,
-                  // dotData: FlDotData(
-                  //   show: false,
-                  // ),
+                  dotData: FlDotData(
+                    show: false,
+                  ),
                 ),
               ],
             ),
           ),
         ),
-        Text(
-          tickers!['k']['s'],
-        ), Text(
-          "Open Prize " + tickers!['k']['o'],
-        ),
-
       ]),
     );
   }
