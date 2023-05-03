@@ -4,6 +4,8 @@ import 'package:cryptovision/components/myappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
+import 'crypto_details.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -88,64 +90,87 @@ class _HomeScreenState extends State<HomeScreen> {
                       final ticker = tickers![position];
                       final String symbol = ticker['s'].toString();
 
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10.0),
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[900],
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 40.0,
-                                  width: 40.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.blueGrey[800],
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.account_balance_wallet,
-                                      color: Colors.white,
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CryptoDetails(
+                                        symbol: ticker['s'].toString(),
+                                      )));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 80.0,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[900],
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 40.0,
+                                    width: 40.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.blueGrey[800],
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10.0),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      symbol,
-                                      style: const TextStyle(
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.account_balance_wallet,
                                         color: Colors.white,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const SizedBox(height: 5.0),
-                                    Text(
-                                      "${ticker['c']}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.0,
+                                  ),
+                                  const SizedBox(width: 10.0),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        symbol,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        "${ticker['c']}",
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ticker['p'].toString(),
+                                    style: TextStyle(
+                                      color: ticker['p']
+                                                  .toString()
+                                                  .characters
+                                                  .first ==
+                                              "-"
+                                          ? Colors.red
+                                          : Colors.green,
+                                      fontSize: 14.0,
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  ticker['p'].toString(),
-                                  style: TextStyle(
+                                  ),
+                                  const SizedBox(height: 5.0),
+                                  Icon(
+                                    Icons.arrow_drop_up,
                                     color: ticker['p']
                                                 .toString()
                                                 .characters
@@ -153,22 +178,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                             "-"
                                         ? Colors.red
                                         : Colors.green,
-                                    fontSize: 14.0,
+                                    size: 30.0,
                                   ),
-                                ),
-                                const SizedBox(height: 5.0),
-                                Icon(
-                                  Icons.arrow_drop_up,
-                                  color:
-                                      ticker['p'].toString().characters.first ==
-                                              "-"
-                                          ? Colors.red
-                                          : Colors.green,
-                                  size: 30.0,
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
