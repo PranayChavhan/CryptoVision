@@ -44,6 +44,9 @@ dependencies:
   shared_preferences: ^2.1.0
   intl: ^0.18.1
   url_launcher: ^6.1.10
+  flutter_icons: ^1.1.0
+  syncfusion_flutter_charts: ^21.2.3
+  chart_sparkline: ^1.0.13
 
 
 dev_dependencies:
