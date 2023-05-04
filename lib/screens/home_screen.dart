@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
 import 'crypto_details.dart';
+import 'news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
