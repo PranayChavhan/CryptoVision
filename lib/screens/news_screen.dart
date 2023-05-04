@@ -15,6 +15,13 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          centerTitle: true,
+          elevation: 0,
+          title: Text(
+            "CryptoNews",
+            style: TextStyle(fontSize: 16),
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -25,6 +32,40 @@ class _NewsScreenState extends State<NewsScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        body: Container(
+          color: Colors.grey.shade900,
+          child: FutureBuilder(
+              future: news.getNews(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<Article> data = snapshot.data!;
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return NewsTile(
+                          imgUrl: data[index].urlToImage,
+                          title: data[index].title,
+                          desc: data[index].description,
+                          content: data[index].content,
+                          posturl: data[index].url,
+                        );
+
+                        return const Text("hello");
+                      });
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(snapshot.error.toString()),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ));
         actions: [
           IconButton(
             onPressed: () {},

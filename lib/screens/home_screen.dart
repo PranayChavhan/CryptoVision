@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:cryptovision/components/myappbar.dart';
+import 'package:cryptovision/screens/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:http/http.dart' as http;
@@ -93,28 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10.0),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  height: 50.0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search for cryptocurrencies',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[400],
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.grey[400],
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[900],
-                    ),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  //Search Box
+                  child: searchBox(),
                 ),
                 const SizedBox(height: 10.0),
                 Expanded(
@@ -152,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  //Widgets--------------------------------------------------------------------
   Column TopStatsCard(String title, String cost, String change) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -198,82 +182,113 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Drawer _buildDrawer(BuildContext context) {
     return Drawer(
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.black,
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const SizedBox(
-                      height: 50,
-                      width: 60,
-                      child: Image(
-                          image: NetworkImage(
-                              "https://cdn-icons-png.flaticon.com/512/4140/4140061.png"))),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      widget.data,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
+        color: Colors.grey.shade900,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+
+          children: [
+            Container(
+              height: 120,
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                        height: 50,
+                        width: 60,
+                        child: Image(
+                            image: NetworkImage(
+                                "https://cdn-icons-png.flaticon.com/512/4140/4140061.png"))),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        widget.data,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
                     ),
-                  )
-                ]),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              leading: const Icon(
-                Icons.home,
-              ),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-              selected: true,
+                  ]),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                leading: const Icon(Icons.home, color: Colors.white),
+                title: const Text(
+                  'Home',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                selected: true,
               ),
-              leading: const Icon(
-                Icons.newspaper,
-              ),
-              title: const Text('News'),
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const NewsScreen()),
-                    (route) => false);
-              },
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                leading: const Icon(Icons.newspaper, color: Colors.white),
+                title: const Text(
+                  'News',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewsScreen()));
+                },
               ),
-              leading: const Icon(
-                Icons.account_circle,
-              ),
-              title: const Text('Profile'),
-              onTap: () {
-                Navigator.pop(context);
-              },
             ),
-          ),
-        ],
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                leading: const Icon(Icons.account_circle, color: Colors.white),
+                title: const Text(
+                  'Profile',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Search Box ---------------------
+  Widget searchBox() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade800,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextField(
+        style: TextStyle(color: Colors.white),
+        // onChanged: (value) => _runFilter(value),
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: Icon(Icons.search, color: Colors.white, size: 20),
+          prefixIconConstraints: BoxConstraints(minHeight: 20, minWidth: 25),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: Colors.white, fontSize: 15),
+        ),
       ),
     );
   }
