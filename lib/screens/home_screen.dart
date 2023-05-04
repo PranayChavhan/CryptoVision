@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
 import '../components/coinCard.dart';
 import '../models/coinModel.dart';
 import 'crypto_details.dart';
-import 'news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
