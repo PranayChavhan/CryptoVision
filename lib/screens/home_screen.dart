@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cryptovision/components/myappbar.dart';
@@ -9,7 +10,6 @@ import 'package:web_socket_channel/io.dart';
 import 'package:http/http.dart' as http;
 import '../components/coinCard.dart';
 import '../models/coinModel.dart';
-import 'crypto_details.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    streamListener();
     getCoinMarket();
+    streamListener();
   }
 
   streamListener() {
