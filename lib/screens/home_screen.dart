@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     streamListener();
   }
 
+  bool isRefreshing = true;
   streamListener() {
     channel = IOWebSocketChannel.connect(
         'wss://stream.binance.com:9443/ws/!ticker@arr');
@@ -38,8 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
-
-  bool isRefreshing = true;
 
   List? coinMarket = [];
   var coinMarketList;
