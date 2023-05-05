@@ -11,6 +11,19 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: "CryptoVision",
       debugShowCheckedModeBanner: false,
+      color: Colors.yellow,
+      theme: ThemeData(
+        primaryColor: Colors.yellow,
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(
+              color: Colors.white), // set the default text color to white
+          bodyMedium: TextStyle(color: Colors.white),
+          displayLarge: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(color: Colors.grey.shade200),
+
+          // add more text styles as needed
+        ),
+      ),
       home: WelcomeScreen(),
     );
   }
