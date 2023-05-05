@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.newspaper,
               ),
               title: const Text('News'),
@@ -189,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              leading: Icon(
+              leading: const Icon(
                 Icons.account_circle,
               ),
               title: const Text('Profile'),
