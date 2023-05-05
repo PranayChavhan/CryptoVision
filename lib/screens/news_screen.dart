@@ -1,9 +1,9 @@
+import 'package:cryptovision/components/news_tile.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:cryptovision/models/Article.dart';
 import 'package:flutter/material.dart';
 import '../components/myappbar.dart';
 import '../models/News.dart';
-import 'Widgets.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});

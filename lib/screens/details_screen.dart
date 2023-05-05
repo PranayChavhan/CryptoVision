@@ -9,15 +9,15 @@ import 'package:web_socket_channel/io.dart';
 import 'package:cryptovision/components/line_chart_widget.dart';
 import 'package:cryptovision/data/price_point.dart';
 
-class CryptoDetails extends StatefulWidget {
+class DetailsScreen extends StatefulWidget {
   String symbol;
-  CryptoDetails({Key? key, required this.symbol}) : super(key: key);
+  DetailsScreen({Key? key, required this.symbol}) : super(key: key);
 
   @override
-  State<CryptoDetails> createState() => _CryptoDetailsState();
+  State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
-class _CryptoDetailsState extends State<CryptoDetails> {
+class _DetailsScreenState extends State<DetailsScreen> {
   late IOWebSocketChannel channel;
   Map<String, dynamic>? ticker;
   List<PricePoint>? points;

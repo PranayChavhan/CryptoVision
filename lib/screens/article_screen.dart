@@ -3,15 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class ArticleView extends StatefulWidget {
+class ArticleScreen extends StatefulWidget {
   final String postUrl;
-  ArticleView({required this.postUrl});
+  ArticleScreen({required this.postUrl});
 
   @override
-  _ArticleViewState createState() => _ArticleViewState();
+  _ArticleScreenState createState() => _ArticleScreenState();
 }
 
-class _ArticleViewState extends State<ArticleView> {
+class _ArticleScreenState extends State<ArticleScreen> {
   // final Completer<WebViewController> _controller = Completer<WebViewController>();
   @override
   Widget build(BuildContext context) {

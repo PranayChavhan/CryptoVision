@@ -5,7 +5,7 @@ import 'package:cryptovision/screens/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 
-import 'crypto_details.dart';
+import 'details_screen.dart';
 import 'news_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CryptoDetails(
+                                  builder: (context) => DetailsScreen(
                                         symbol: ticker['s'].toString(),
                                       )));
                         },
