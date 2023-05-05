@@ -70,7 +70,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         child: Image(
                             image: Image.asset('assets/crypto.gif').image)),
                     const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                         child: Text("Welcome to CryptoVision!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -81,7 +82,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     const Text("Please enter your name to get started!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w300)),
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300)),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 35.0, vertical: 20),

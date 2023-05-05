@@ -33,6 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
     channel.stream.listen((message) {
       setState(() {
         tickers = jsonDecode(message);
+        print("Data=================================");
+        print(tickers);
       });
     });
   }

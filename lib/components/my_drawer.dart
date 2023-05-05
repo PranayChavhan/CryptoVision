@@ -1,6 +1,8 @@
 import 'package:cryptovision/screens/analyse_home_screen.dart';
 import 'package:cryptovision/screens/home_screen.dart';
 import 'package:cryptovision/screens/news_screen.dart';
+import 'package:cryptovision/screens/profile_screen.dart';
+import 'package:cryptovision/screens/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +14,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  String _name = " ";
+  String _name = "Username";
 
   Future<void> _getName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -20,6 +22,13 @@ class _MyDrawerState extends State<MyDrawer> {
     setState(() {
       _name = name;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getName();
   }
 
   @override
@@ -57,19 +66,19 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ]),
             ),
+            Divider(color: Colors.grey.shade700),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 12),
               child: ListTile(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                leading: const Icon(Icons.home, color: Colors.white),
+                leading: const Icon(Icons.home),
                 title: const Text(
                   'Home',
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => HomeScreen(
@@ -77,6 +86,8 @@ class _MyDrawerState extends State<MyDrawer> {
                               )));
                 },
                 selected: true,
+                selectedColor: Colors.yellow,
+                selectedTileColor: Colors.yellow.shade300,
               ),
             ),
             Container(
@@ -85,13 +96,16 @@ class _MyDrawerState extends State<MyDrawer> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                leading: const Icon(Icons.query_stats, color: Colors.white),
+                leading: const Icon(
+                  Icons.query_stats,
+                  color: Colors.white,
+                ),
                 title: const Text(
                   'Analitics',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(),
                 ),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AnalyseHomeScreen()));
@@ -107,11 +121,28 @@ class _MyDrawerState extends State<MyDrawer> {
                 leading: const Icon(Icons.newspaper, color: Colors.white),
                 title: const Text(
                   'News',
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => NewsScreen()));
+                },
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                leading: const Icon(Icons.favorite_border, color: Colors.white),
+                title: const Text(
+                  'Wishlist',
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WishlistScreen()));
                 },
               ),
             ),
@@ -124,10 +155,12 @@ class _MyDrawerState extends State<MyDrawer> {
                 leading: const Icon(Icons.account_circle, color: Colors.white),
                 title: const Text(
                   'Profile',
-                  style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfileScreen(data: _name)));
                 },
               ),
             ),

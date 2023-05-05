@@ -10,7 +10,8 @@ class LineChartWidget extends StatefulWidget {
   String symbol;
   final List<PricePoint> points;
 
-  LineChartWidget(this.points, {Key? key,  required this.symbol}) : super(key: key);
+  LineChartWidget(this.points, {Key? key, required this.symbol})
+      : super(key: key);
 
   @override
   State<LineChartWidget> createState() => _LineChartWidgetState();
@@ -19,7 +20,6 @@ class LineChartWidget extends StatefulWidget {
 class _LineChartWidgetState extends State<LineChartWidget> {
   late IOWebSocketChannel channel;
   Map<String, dynamic>? tickers;
-
 
   @override
   void initState() {
@@ -37,7 +37,6 @@ class _LineChartWidgetState extends State<LineChartWidget> {
     });
   }
 
-
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 2,
@@ -45,7 +44,9 @@ class _LineChartWidgetState extends State<LineChartWidget> {
         LineChartData(
           lineBarsData: [
             LineChartBarData(
-              spots: widget.points.map((point) => FlSpot(point.x, point.y)).toList(),
+              spots: widget.points
+                  .map((point) => FlSpot(point.x, point.y))
+                  .toList(),
               isCurved: false,
               // dotData: FlDotData(
               //   show: false,

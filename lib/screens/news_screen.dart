@@ -1,3 +1,5 @@
+import 'package:cryptovision/components/my_drawer.dart';
+import 'package:cryptovision/components/myappbar.dart';
 import 'package:cryptovision/components/news_tile.dart';
 import 'package:cryptovision/models/Article.dart';
 import 'package:flutter/material.dart';
@@ -15,15 +17,8 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          elevation: 0,
-          title: const Text(
-            "CryptoNews",
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
+        appBar: const MyAppBar(title: "CryptoNews"),
+        drawer: MyDrawer(),
         body: Container(
           color: Colors.grey.shade900,
           child: FutureBuilder(
