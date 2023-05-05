@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../models/chartModel.dart';
+import 'add_wishlist.dart';
 
 class CryptoDetails extends StatefulWidget {
   var selectItem;
@@ -318,9 +319,15 @@ class _CryptoDetailsState extends State<CryptoDetails> {
                                 Icons.add,
                                 size: myHeight * 0.02,
                               ),
-                              const Text(
-                                'Add to wishlist',
-                                style: TextStyle(fontSize: 20),
+                              GestureDetector(
+                                onTap: () => {
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => AddWishlist()))
+                                },
+                                child: const Text(
+                                  'Add to wishlist',
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                             ],
                           ),

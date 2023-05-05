@@ -49,6 +49,7 @@ dependencies:
   chart_sparkline: ^1.0.13
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
