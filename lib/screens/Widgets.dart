@@ -84,6 +84,7 @@ class NewsTile extends StatelessWidget {
                   Text(
                     desc,
                     maxLines: 2,
+                    textAlign: TextAlign.justify,
                     style: TextStyle(color: Colors.grey.shade200, fontSize: 14),
                   )
                 ],

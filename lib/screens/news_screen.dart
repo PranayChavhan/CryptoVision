@@ -46,8 +46,6 @@ class _NewsScreenState extends State<NewsScreen> {
                           content: data[index].content,
                           posturl: data[index].url,
                         );
-
-                        return const Text("hello");
                       });
                 }
                 if (snapshot.hasError) {
