@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:cryptovision/components/my_drawer.dart';
 import 'package:cryptovision/components/myappbar.dart';
+import 'package:cryptovision/screens/analyse_home_screen.dart';
 import 'package:cryptovision/screens/news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const MyAppBar(title: "Crypto Vision"),
-      drawer: _buildDrawer(context),
+      drawer: MyDrawer(),
       body: (tickers == null)
           ? const Center(
               child: CircularProgressIndicator(
@@ -272,6 +274,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.pop(context);
                 },
                 selected: true,
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                leading: const Icon(Icons.query_stats, color: Colors.white),
+                title: const Text(
+                  'Analitics',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AnalyseHomeScreen()));
+                },
               ),
             ),
             Container(

@@ -69,15 +69,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             EdgeInsets.symmetric(horizontal: 35, vertical: 30),
                         child: Image(
                             image: Image.asset('assets/crypto.gif').image)),
-                    Padding(
+                    const Padding(
                         padding: EdgeInsets.symmetric(vertical: 15),
                         child: Text("Welcome to CryptoVision!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 30,
+                                color: Colors.black,
                                 letterSpacing: 0.7,
                                 fontWeight: FontWeight.w600))),
-                    Text("Please enter your name to get started!",
+                    const Text("Please enter your name to get started!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w300)),
@@ -129,15 +130,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               }
                             },
                             child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 14, horizontal: 105),
-                                child: Text("Get Started",
+                                child: const Text("Get Started",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 18,
                                         letterSpacing: 1))))),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     )
                   ]),

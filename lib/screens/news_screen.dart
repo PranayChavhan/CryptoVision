@@ -1,8 +1,6 @@
 import 'package:cryptovision/components/news_tile.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:cryptovision/models/Article.dart';
 import 'package:flutter/material.dart';
-import '../components/myappbar.dart';
 import '../models/News.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -21,8 +19,8 @@ class _NewsScreenState extends State<NewsScreen> {
           backgroundColor: Colors.black,
           centerTitle: true,
           elevation: 0,
-          title: Text(
-            "News Data",
+          title: const Text(
+            "CryptoNews",
             style: TextStyle(fontSize: 16),
           ),
         ),
@@ -38,7 +36,6 @@ class _NewsScreenState extends State<NewsScreen> {
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        print("data hai bhai");
                         return NewsTile(
                           imgUrl: data[index].urlToImage,
                           title: data[index].title,
