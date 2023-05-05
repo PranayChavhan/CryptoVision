@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     streamListener();
   }
 
+  bool isRefreshing = true;
   streamListener() {
     channel = IOWebSocketChannel.connect(
         'wss://stream.binance.com:9443/ws/!ticker@arr');
@@ -38,8 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     });
   }
-
-  bool isRefreshing = true;
 
   List? coinMarket = [];
   var coinMarketList;
@@ -64,9 +63,22 @@ class _HomeScreenState extends State<HomeScreen> {
         coinMarket = coinMarketList;
       });
     } else {
-      // print(response.statusCode);
+      print(coinMarket);
     }
   }
+
+  // Future<List<CoinModel>?> getCoinMarket() async {
+  //   channel = IOWebSocketChannel.connect(
+  //       'wss://stream.binance.com:9443/ws/!ticker@arr');
+  //   var coinMarketList = <CoinModel>[];
+
+  //   channel.stream.listen((message) {
+  //     setState(() {
+  //       coinMarket = jsonDecode(message);
+  //       // print(coinMarket);
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,14 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Drawer _buildDrawer(BuildContext context) {
     return Drawer(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 25),
         color: Colors.grey.shade900,
         child: ListView(
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
 
           children: [
-            Container(
+            SizedBox(
               height: 120,
               child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,8 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NewsScreen()));
                 },
               ),
             ),
@@ -277,10 +291,10 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.grey.shade800,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextField(
+      child: const TextField(
         style: TextStyle(color: Colors.white),
         // onChanged: (value) => _runFilter(value),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search, color: Colors.white, size: 20),
           prefixIconConstraints: BoxConstraints(minHeight: 20, minWidth: 25),

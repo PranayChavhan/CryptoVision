@@ -66,9 +66,9 @@ class CoinModel {
   SparklineIn7D sparklineIn7D;
 
   factory CoinModel.fromJson(Map<String, dynamic> json) => CoinModel(
-        id: json["id"],
-        symbol: json["symbol"],
-        name: json["name"],
+        id: json["s"],
+        symbol: json["k"]["s"],
+        name: json["k"]["s"],
         image: json["image"],
         currentPrice: json["current_price"].toDouble(),
         marketCap: json["market_cap"],
