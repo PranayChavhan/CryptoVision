@@ -4,7 +4,9 @@
 
 Cryptovision is a Flutter application designed for tracking cryptocurrency prices and trends. It provides real-time data using the Binance Socket API and features a candle chart implementation using Syncfusion. Stay updated with the latest cryptocurrency market movements and make informed investment decisions. 🚀📊
 
-![Cryptovision Screenshot](screenshot.png)
+
+https://github.com/PranayChavhan/BookMyFlight/assets/85397500/2a87c837-7397-4ea7-b4dc-8b5499f851c2
+
 
 ## 📚 Introduction
 
@@ -50,7 +52,10 @@ Contributions to Cryptovision are welcome! If you have any ideas, bug reports, o
 
 For any inquiries or further information, feel free to reach out to me:
 
-- **Email**: pranaychavhan2102@gmail.com
-- **LinkedIn**: [Your Name](https://www.linkedin.com/in/pranay-chavhan-38785a224/)
+- **Email**: chavhanpranay48@gmail.com
+- **LinkedIn**: [Pranay Chavhan](https://www.linkedin.com/in/pranay-chavhan-38785a224/)
 
 Stay ahead of the cryptocurrency market with Cryptovision!
+
+
+
